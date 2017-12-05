@@ -92,7 +92,10 @@ class Home extends CI_Controller {
         $this->session->sess_destroy();
         redirect(base_url());
     }
-    function test(){
+    function exampleCRUD(){
+        /**
+         * Insert Into Database
+         */
         $event = $this->Event;
         $event->setName("Indra");
         $event->setLocation("Indonesia");
@@ -100,8 +103,55 @@ class Home extends CI_Controller {
         $event->setDescription("Test");
         $event->setImg("img.jpg");
         $event->setId_category(3);
-        $event->setId_users($this->session->id_users);
+        $event->setId_users("12");
         $event->save();
+        /**
+         * Update Into Database 
+         * Kudu di Isiken Kabeh Ulah Hiji2 
+         */
+        $event = $this->Event;
+        $event->setName("Indra");
+        $event->setLocation("Indonesia");
+        $event->setTime(date("Y-m-d"));
+        $event->setDescription("Test");
+        $event->setImg("img.jpg");
+        $event->setId_category(3);
+        $event->setId_users("12");
+        $event->setID("12"); // Default na update na Ngarujuk Param ID 
+        $event->update();
+        
+        /**
+         * Kecuali Ai update() na bogaen param
+         */
+        $event = $this->Event;
+        $event->setName("Indra");
+        $event->setLocation("Indonesia");
+        $event->setTime(date("Y-m-d"));
+        $event->setDescription("Test");
+        $event->setImg("img.jpg");
+        $event->setId_category(3);
+        $event->setId_users("12");
+        $event->setID("12"); 
+        $event->update("id_category",3); //Eta Artina Updatena Acuana Pake id_category = 3
+        /**
+         * Delete Database
+         */
+        $event = $this->Event;
+        $event->setID("12");
+        $event->delete();//Default na Parameter na pakai ID Event
+        /**
+         * Kecuali ai delete() bogaen Parameter
+         */
+        $event = $this->Event;
+        $event->delete("id_users",1); // Artina Delete Kabeh Data Anu di Cicingan ku ID User 1 
+        /**
+         * Select Into DB 
+         * 
+         */
+        $event = $this->event();
+        $event->find();//Cari Semua Data
+        $event->find("id_category",1);//Cari Semua Data Yang ID Category nya 1 
+        
     }
 
 }
