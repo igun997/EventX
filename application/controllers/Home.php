@@ -71,7 +71,9 @@ class Home extends CI_Controller {
             if($post["username"] != "" && $post["password"]){
                 if($users->find("username",$post["username"])->num_rows() > 0){
                     if($users->find("password",md5($post["password"]))->num_rows() > 0){
+                        $id_users = $users->find("username",$post["username"]);
                         $this->session->set_userdata("nama",$post["username"]);
+                        $this->session->set_userdata("id_users",$id_users->row()->id_users);
                         $data["msg"] = "Login Berhasil";
                         redirect(base_url());
                     }else{
@@ -89,6 +91,17 @@ class Home extends CI_Controller {
     function logout(){
         $this->session->sess_destroy();
         redirect(base_url());
+    }
+    function test(){
+        $event = $this->Event;
+        $event->setName("Indra");
+        $event->setLocation("Indonesia");
+        $event->setTime(date("Y-m-d"));
+        $event->setDescription("Test");
+        $event->setImg("img.jpg");
+        $event->setId_category(3);
+        $event->setId_users($this->session->id_users);
+        $event->save();
     }
 
 }
